@@ -19,7 +19,7 @@ document.getElementById("myForm").addEventListener('submit', async function (eve
     }
 
     if (y < -3 || y > 3) {
-        errorMessage.textContent = 'Координата Y должна быть в пределах от -2 до 2.';
+        errorMessage.textContent = 'Координата Y должна быть в пределах от -3 до 3.';
         successMessage.textContent = '';
         return;
     }
@@ -36,13 +36,13 @@ document.getElementById("myForm").addEventListener('submit', async function (eve
         var start = window.performance.now();
         document.getElementById('res').innerHTML = '';
 
-        // Используйте await для вызова fetch
+        
         const response = await fetch('check.php', {
             method: 'POST',
-            body: formData, // Используйте объект FormData
+            body: formData, 
         });
 
-        // Проверьте, что статус ответа успешен (200)
+        
         if (response.ok) {
             const data = await response.text();
             const resultTable = document.getElementById('res');
