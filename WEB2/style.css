@@ -1,0 +1,98 @@
+body {
+    font-family: cursive; 
+    background-color: #f0f0f0;
+    color: #333;
+    font-size: 16px; 
+}
+
+header {
+    text-align: center;
+    font-size: 18px; 
+}
+
+table {
+    width:100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 2%; /* Отступ в процентах */
+    border: 1px solid #ccc;
+}
+
+input[type="radio"] {
+    width:  10px;
+}
+
+#send {
+    background-color: #0077b6;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+#errorMessage {
+    color: red;
+    font-weight: bold;
+}
+
+#successMessage {
+    color: green;
+    font-weight: bold;
+}
+
+a:link {
+    color: #0077b6;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+td[name="blyat"] input[type="radio"] {
+    margin-right: 10px; 
+}
+
+#res {
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+/* Стиль для заголовков таблицы */
+.result_header th {
+    background-color: #007BFF; 
+    color: #fff; 
+    text-align: center; 
+}
+
+.row td {
+    text-align: center; 
+    vertical-align: middle; 
+    border: 1px solid #ccc; 
+    padding: 5px; 
+}
+
+
+.row[value="yes"] {
+    background-color: #4CAF50; 
+    color: #fff; 
+}
+
+input[type="radio"][value="-2"] {
+    width: 10px; 
+}
