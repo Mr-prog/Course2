@@ -80,7 +80,7 @@ td[name="blyat"] input[type="radio"] {
     text-align: center; 
 }
 
-.row td {
+.result_table td {
     text-align: center; 
     vertical-align: middle; 
     border: 1px solid #ccc; 

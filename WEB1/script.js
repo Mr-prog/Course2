@@ -24,6 +24,12 @@ document.getElementById("myForm").addEventListener('submit', async function (eve
         return;
     }
 
+    if (r < 2 || r > 5) {
+        errorMessage.textContent = 'Координата R должна быть в пределах от -3 до 3.';
+        successMessage.textContent = '';
+        return;
+    }
+
     errorMessage.textContent = '';
     successMessage.textContent = 'Данные введены успешно!';
 
@@ -32,10 +38,6 @@ document.getElementById("myForm").addEventListener('submit', async function (eve
         formData.append('x', x.value);
         formData.append('y', y);
         formData.append('r', r);
-
-        var start = window.performance.now();
-        document.getElementById('res').innerHTML = '';
-
         
         const response = await fetch('check.php', {
             method: 'POST',
@@ -45,8 +47,9 @@ document.getElementById("myForm").addEventListener('submit', async function (eve
         
         if (response.ok) {
             const data = await response.text();
-            const resultTable = document.getElementById('res');
-            resultTable.innerHTML = data;
+            const resultTable = document.getElementById('result-table');
+            resultTable.insertAdjacentHTML("afterbegin", data)
+;
         } else {
             console.error('Ошибка:', response.status);
         }

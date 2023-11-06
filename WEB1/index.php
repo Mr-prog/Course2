@@ -46,9 +46,10 @@ if (!isset($_SESSION['history'])) {
             <tr>
                 <td><input type="submit" id="send" value="Отправить ответ"></td>
             </tr>
-
         </table>
     </form>
+    <div id="errorMessage" style="color: red;"></div>
+    <div id="successMessage" style="color: green;"></div>
     <table id="res">
         <tr class="result_header">
             <th>X</th>
@@ -58,22 +59,23 @@ if (!isset($_SESSION['history'])) {
             <th>Execution time</th>
             <th>Hit</th>
         </tr>
+    </table>
+    <table id="result-table">
         <?php
         $history = $_SESSION['history'];
         foreach ($history as $row) {
-            echo "<tr class='row' value='" . strtolower($row['hit']) . "'>";
-            echo "<td>" . $row['x'] . "</td>";
-            echo "<td>" . $row['y'] . "</td>";
-            echo "<td>" . $row['r'] . "</td>";
-            echo "<td>" . $row['currentTime'] . "</td>";
-            echo "<td>" . $row['executionTime'] . "</td>";
-            echo "<td>" . $row['hit'] . "</td>";
+            echo "<tr class=\"result_row\" value=\"" . strtolower($hit) . "\">";
+            echo "<th>" . $row['x'] . "</th>";
+            echo "<th>" . $row['y'] . "</th>";
+            echo "<th>" . $row['r'] . "</th>";
+            echo "<th>" . $row['currentTime'] . "</th>";
+            echo "<th>" . $row['executionTime'] . "</th>";
+            echo "<th>" . $row['hit'] . "</th>";
             echo "</tr>";
         }
         ?>
     </table>
-    <div id="errorMessage" style="color: red;"></div>
-    <div id="successMessage" style="color: green;"></div>
+
     <script src="script.js"></script>
 </body>
 

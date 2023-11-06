@@ -25,31 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['x']) && isset($_POST[
         echo "Invalid data";
         exit();
     }
-
-    $history = $_SESSION['history'];
-
-    echo '<table id="res">';
-    echo '<tr class="result_header">';
-    echo "<th>X</th>";
-    echo "<th>Y</th>";
-    echo "<th>R</th>";
-    echo "<th>Current time</th>";
-    echo "<th>Execution time</th>";
-    echo "<th>Hit</th>";
+    echo "<tbody>";
+    echo "<tr class=\"result_row\" value=\"" . strtolower($hit) . "\">";
+    echo "<th>" . $x . "</th>";
+    echo "<th>" . $y . "</th>";
+    echo "<th>" . $r . "</th>";
+    echo "<th>" . $currentTime . "</th>";
+    echo "<th>" . $executionTime . "</th>";
+    echo "<th>" . $hit . "</th>";
     echo "</tr>";
-
-    foreach ($history as $row) {
-        echo "<tr class='row' value='" . strtolower($row['hit']) . "'>";
-        echo "<td>" . $row['x'] . "</td>";
-        echo "<td>" . $row['y'] . "</td>";
-        echo "<td>" . $row['r'] . "</td>";
-        echo "<td>" . $row['currentTime'] . "</td>";
-        echo "<td>" . $row['executionTime'] . "</td>";
-        echo "<td>" . $row['hit'] . "</td>";
-        echo "</tr>";
-    }
-
-    echo '</table>';
+    echo "</tbody>";
 }
 
 function validDate($x, $y, $r) {
