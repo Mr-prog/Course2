@@ -1,0 +1,126 @@
+plugins {
+    id 'war'
+    id 'org.hidetake.ssh' version "2.11.2"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    providedCompile 'jakarta.platform:jakarta.jakartaee-api:9.0.0'
+    providedCompile 'jakarta.enterprise:jakarta.enterprise.cdi-api:3.0.0'
+    providedCompile 'jakarta.inject:jakarta.inject-api:2.0.0'
+    providedCompile 'jakarta.persistence:jakarta.persistence-api:3.0.0'
+
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '6.2.7.Final'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.1'
+
+    // Jakarta Faces API для компиляции, но не включается в WAR
+    compileOnly 'jakarta.faces:jakarta.faces-api:4.0.0'
+
+    // Jakarta Servlet API для компиляции, но не включается в WAR
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:5.0.0'
+
+    // Jakarta EJB API для компиляции, но не включается в WAR
+    compileOnly 'jakarta.ejb:jakarta.ejb-api:4.0.0'
+
+    // Lombok для аннотаций и обработки аннотаций во время компиляции
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+    // Зависимости для тестирования
+    testCompileOnly 'org.projectlombok:lombok:1.18.32'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+
+
+
+war {
+    archiveFileName = 'web-lab3.war'
+}
+
+def projectPath = layout.getProjectDirectory()
+
+remotes {
+    remoteServer {
+        host = getProperty('remote-server-host')
+        user = getProperty('remote-server-username')
+        password = getProperty('remote-server-key')
+        port = Integer.parseInt(getProperty('remote-server-port') as String)
+        knownHosts = allowAnyHosts
+    }
+}
+
+tasks.register('se-scp') {
+    dependsOn('war')
+    group = getProperty("task-group")
+    doFirst {
+        def warFile = war.archiveFile.get().asFile.toString()
+        ssh.run {
+            session(remotes.remoteServer) {
+                put from: warFile, into: '.'
+            }
+        }
+    }
+}
+
+tasks.register('se-clean', Delete) {
+    dependsOn 'clean'
+    group = getProperty("task-group")
+}
+
+tasks.register('se-compile', JavaCompile) {
+    dependsOn 'classes'
+    group = getProperty("task-group")
+}
+
+tasks.register('se-test') {
+    dependsOn 'test'
+    group = getProperty("task-group")
+}
+
+tasks.register('se-alt') {
+    group = getProperty("task-group")
+    dependsOn('regex-rename', 'war', 'return-src')
+}
+
+tasks.register('temp-move-src') {
+    doLast {
+        ant.move(file: "${projectPath}/src", todir: "${projectPath}/src-temp")
+    }
+}
+
+tasks.register('regex-rename', Copy) {
+    dependsOn('temp-move-src')
+    from "${projectPath}/src-temp/src"
+    into "${projectPath}/src"
+
+    def namesSet = new HashSet<String>()
+
+    rename { String fileName ->
+        if (fileName.endsWith(".java")) {
+            def oldName = fileName.replace(".java", "")
+            namesSet.add(oldName)
+            return oldName + "SNAPSHOT" + ".java"
+        } else {
+            return fileName
+        }
+    }
+
+    filter(ReplaceTokens, tokens: namesSet.collectEntries { name -> [(name): "${name}SNAPSHOT"] })
+    filteringCharset = 'UTF-8'
+}
+
+tasks.register('return-src') {
+    doLast {
+        delete "${projectPath}/src"
+        copy {
+            from "${projectPath}/src-temp/src"
+            into "${projectPath}/src"
+        }
+        delete "${projectPath}/src-temp"
+    }
+}

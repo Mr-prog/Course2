@@ -1,0 +1,52 @@
+<form id="area-check-request-form">
+    <input type="hidden" name="request-type" value="area-check-request">
+    <table class="form-table">
+        <tr>
+            <td>
+                <label for="y">Координата Y</label><br>
+                <input id="y" type="text" name="y" placeholder="(-5 ... 3)" class="text-field"><br>
+            </td>
+            <td>
+                <label for="x">Координата X</label><br>
+                <input id="x" type="text" name="x" placeholder="(-5 ... 3)" class="text-field"><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr id="r-label-row">
+                        <td colspan="5" class="y-label"><label>Радиус</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="r+1" type="radio" name="r" value="1"><br>
+                            <label for="r+1">1</label>
+                        </td>
+                        <td>
+                            <input id="r+1.5" type="radio" name="r" value="1.5"><br>
+                            <label for="r+1.5">1.5</label>
+                        </td>
+                        <td>
+                            <input id="r+2" type="radio" name="r" value="2"><br>
+                            <label for="r+2">2</label>
+                        </td>
+                        <td>
+                            <input id="r+2.5" type="radio" name="r" value="2.5"><br>
+                            <label for="r+2.5">2.5</label>
+                        </td>
+                        <td>
+                            <input id="r+3" type="radio" name="r" value="3"><br>
+                            <label for="r+3">3</label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input id="submit" type="button" value="Отправить">
+                <span id="err-msg"></span>
+            </td>
+        </tr>
+    </table>
+</form>

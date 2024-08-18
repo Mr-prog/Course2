@@ -1,0 +1,11 @@
+app\MainPageBean.class
+validators\FloatValidator.class
+validators\XValidator.class
+data\HitCheckData.class
+data\HitCheckServiceBean.class
+data\HitCheckEntity.class
+script\HitChecker.class
+script\HitCheckScriptBean.class
+validators\YValidator.class
+data\AreaDotData.class
+validators\FloatIntervalValidator.class
